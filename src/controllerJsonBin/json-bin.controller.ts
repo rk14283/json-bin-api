@@ -51,4 +51,49 @@ export class JsonBinController {
       return response.status(err.status).json(err.response);
     }
   }
+
+  @Get('/:id')
+  async getJsonBin(@Res() response, @Param('id') JsonBinId: string) {
+    try {
+      const existingJsonBin = await this.JsonBinService.getJsonBin(JsonBinId);
+      return response.status(HttpStatus.OK).json({
+        message: 'Json bin found successfully',
+        existingJsonBin,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+
+  @Put('/:id')
+  async updateJsonBin(
+    @Res() response,
+    @Param('id') JsonBinId: string,
+    @Body() updateJsonBinDto: UpdateJsonBinDto,
+  ) {
+    try {
+      const existingJsonBin = await this.JsonBinService.updateJsonBin(
+        JsonBinId,
+        updateJsonBinDto,
+      );
+      return response.status(HttpStatus.OK).json({
+        message: 'Json Bin has been successfully updated',
+        existingJsonBin,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+  @Delete('/:id')
+  async deleteJsonBin(@Res() response, @Param('id') JsonBinId: string) {
+    try {
+      const deletedJsonBin = await this.JsonBinService.deleteJsonBin(JsonBinId);
+      return response.status(HttpStatus.OK).json({
+        message: 'JSON Bin has been deleted successfully',
+        deletedJsonBin,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
 }
